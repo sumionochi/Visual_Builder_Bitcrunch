@@ -62,23 +62,35 @@ const APINode = memo(({ data }: APINodeProps) => {
         </div>
       )
     }
-
+  
     if (typeof value === 'object' && value !== null) {
       return renderExtractedResult(value)
     }
-
+  
     // Handle specific types
-    if (type === 'image' || type?.includes('image') || typeof value === 'string' && (value.startsWith('http') && (value.endsWith('.png') || value.endsWith('.jpg') || value.endsWith('.jpeg') || value.endsWith('.gif')))) {
+    if (type === 'image' || type?.includes('image') || typeof value === 'string' && (value.startsWith('http') && (value.endsWith('.png') || value.endsWith('.jpg') || value.endsWith('.jpeg') || value.endsWith('.gif') || value.endsWith('.svg')))) {
+      let cleanImageUrl = value;
+      if (typeof value === 'string') {
+        if (value.includes('.png') || value.includes('.svg')) {
+          const pngIndex = value.indexOf('.png');
+          const svgIndex = value.indexOf('.svg');
+          if (pngIndex !== -1) {
+            cleanImageUrl = value.substring(0, pngIndex + 4);
+          } else if (svgIndex !== -1) {
+            cleanImageUrl = value.substring(0, svgIndex + 4);
+          }
+        }
+      }
       return (
         <img 
-          src={value} 
+          src={cleanImageUrl} 
           alt="Result image" 
           className="max-w-[200px] h-auto rounded-md shadow-sm"
           onError={(e) => e.currentTarget.style.display = 'none'}
         />
       )
     }
-
+  
     if (type === 'url' || (typeof value === 'string' && value.startsWith('http'))) {
       return (
         <a 
@@ -91,7 +103,7 @@ const APINode = memo(({ data }: APINodeProps) => {
         </a>
       )
     }
-
+  
     if (type === 'boolean') {
       return (
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
@@ -99,11 +111,11 @@ const APINode = memo(({ data }: APINodeProps) => {
         </span>
       )
     }
-
+  
     if (type === 'number' || typeof value === 'number') {
       return <span className="font-mono">{value.toLocaleString()}</span>
     }
-
+  
     return <span className="text-sm break-all">{String(value)}</span>
   }
 
