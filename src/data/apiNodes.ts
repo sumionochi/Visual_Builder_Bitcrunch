@@ -15,6 +15,21 @@ export const apiNodes: APINode[] = [
       time_range: { type: 'string', default: 'all', description: 'Time range filter' },
       offset: { type: 'integer', default: 0, description: 'Page index (≥0)' },
       limit: { type: 'integer', default: 30, description: 'Results per page (1-100)' }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          address: { type: 'string', description: 'Wallet address' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          decimal: { type: 'integer', description: 'Token decimal places' },
+          quantity: { type: 'integer', description: 'Token quantity' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_name: { type: 'string', description: 'Token name' },
+          token_symbol: { type: 'string', description: 'Token symbol' }
+        }
+      },
     }
   },
 
@@ -32,6 +47,21 @@ export const apiNodes: APINode[] = [
       time_range: { type: 'string', default: 'all', description: 'Time range filter' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'string', description: 'Chain identifier' },
+          collection: { type: 'string', description: 'Collection name' },
+          contract_address: { type: 'string', description: 'NFT contract address' },
+          contract_type: { type: 'string', description: 'NFT contract type (ERC721/ERC1155)' },
+          quantity: { type: 'integer', description: 'Number of tokens owned' },
+          token_id: { type: 'string', description: 'Unique token identifier' },
+          wallet: { type: 'string', description: 'Owner wallet address' }
+        }
+      }
     }
   },
 
