@@ -50,35 +50,124 @@ const APINode = memo(({ data }: APINodeProps) => {
     }
   }
 
-  const renderExtractedValue = (value: any): React.ReactNode => {
+  const renderExtractedValue = (value: OutputParamValue | any, type?: string): React.ReactNode => {
     if (Array.isArray(value)) {
       return (
-        <div className="ml-4">
+        <div className="space-y-2">
           {value.map((item, index) => (
             <div key={index} className="mt-2">
-              <div className="font-medium text-sm">Item {index + 1}:</div>
               {renderExtractedResult(item)}
             </div>
           ))}
         </div>
       )
     }
-    if (typeof value === "object" && value !== null) {
+
+    if (typeof value === 'object' && value !== null) {
       return renderExtractedResult(value)
     }
-    return <span className="text-sm">{String(value)}</span>
+
+    // Handle specific types
+    if (type === 'image' || type?.includes('image') || typeof value === 'string' && (value.startsWith('http') && (value.endsWith('.png') || value.endsWith('.jpg') || value.endsWith('.jpeg') || value.endsWith('.gif')))) {
+      return (
+        <img 
+          src={value} 
+          alt="Result image" 
+          className="max-w-[200px] h-auto rounded-md shadow-sm"
+          onError={(e) => e.currentTarget.style.display = 'none'}
+        />
+      )
+    }
+
+    if (type === 'url' || (typeof value === 'string' && value.startsWith('http'))) {
+      return (
+        <a 
+          href={value} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:text-blue-600 underline break-all"
+        >
+          {value}
+        </a>
+      )
+    }
+
+    if (type === 'boolean') {
+      return (
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+          {value ? 'Yes' : 'No'}
+        </span>
+      )
+    }
+
+    if (type === 'number' || typeof value === 'number') {
+      return <span className="font-mono">{value.toLocaleString()}</span>
+    }
+
+    return <span className="text-sm break-all">{String(value)}</span>
   }
 
-  const renderExtractedResult = (data: any) => {
+  interface OutputParamValue {
+    type?: string;
+    value: any;
+    items?: Record<string, OutputParamValue>;
+  }
+
+  interface OutputParams {
+    output_params?: {
+      data: {
+        items: Record<string, OutputParamValue>;
+      };
+    };
+    items?: Record<string, OutputParamValue>;
+  }
+
+  const renderExtractedResult = (data: OutputParams | Record<string, any> | any) => {
     if (!data) return null
+
+    // Handle both direct data and nested output_params structure
+    const items = data?.output_params?.data?.items || data?.items || data
+    
+    // If items is not an object, render it directly
+    if (typeof items !== 'object' || items === null) {
+      return renderExtractedValue(items)
+    }
+
+    // Filter out pagination object
+    const filteredItems = typeof items === 'object' ? 
+      Object.fromEntries(
+        Object.entries(items).filter(([key]) => key !== 'pagination')
+      ) : 
+      items
+
     return (
-      <div className="space-y-2">
-        {Object.entries(data).map(([key, value]) => (
-          <div key={key} className="border-l-2 border-gray-200 pl-3 py-1">
-            <div className="font-medium text-sm text-gray-700 break-all">{key}:</div>
-            <div className="ml-2">{renderExtractedValue(value)}</div>
-          </div>
-        ))}
+      <div className="space-y-2 rounded-md bg-gray-50 p-3">
+        {Object.entries(filteredItems).map(([key, value]) => {
+          // Skip empty or null values
+          if (value === null || value === undefined) return null
+
+          // Handle both OutputParamValue structure and direct values
+          const displayValue = (value as OutputParamValue)?.value !== undefined 
+            ? (value as OutputParamValue).value 
+            : value
+          const displayType = (value as OutputParamValue)?.type || (typeof displayValue)
+
+          return (
+            <div key={key} className="group">
+              <div className="flex items-start space-x-2 hover:bg-gray-100 rounded-md p-2 transition-colors">
+                <div className="min-w-[150px]">
+                  <span className="font-medium text-sm text-gray-700">{key}</span>
+                  {displayType && (
+                    <span className="ml-2 text-xs text-gray-500">{displayType}</span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  {renderExtractedValue(displayValue, displayType)}
+                </div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     )
   }

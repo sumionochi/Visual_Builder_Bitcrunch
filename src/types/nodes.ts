@@ -15,6 +15,12 @@ export interface APINode {
   params: Record<string, any>;
   category: string;
   description: string;
+  output_params?: {
+    data: {
+      type: string;
+      items: Record<string, any>;
+    };
+  };
 }
 
 export interface NodeParams {
