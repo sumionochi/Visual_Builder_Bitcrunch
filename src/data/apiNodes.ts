@@ -251,7 +251,7 @@ export const apiNodes: APINode[] = [
     category: 'DeFi',
     description: 'Get protocol metadata',
     params: {
-      blockchain: { type: 'array', description: 'Blockchain filter' },
+      blockchain: { type: 'array' },
       protocol: { type: 'array', description: 'Protocol IDs' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
@@ -289,7 +289,7 @@ export const apiNodes: APINode[] = [
     category: 'DeFi',
     description: 'Get supported DeFi protocols',
     params: {
-      blockchain: { type: 'array', description: 'Blockchain filter' },
+      blockchain: { type: 'array' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
     },
@@ -318,6 +318,21 @@ export const apiNodes: APINode[] = [
       address: { type: 'array', required: true },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          address: { type: 'string', description: 'Wallet address' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          decimal: { type: 'integer', description: 'Token decimal places' },
+          quantity: { type: 'number', description: 'Token quantity' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_name: { type: 'string', description: 'Token name' },
+          token_symbol: { type: 'string', description: 'Token symbol' }
+        }
+      }
     }
   },
 
@@ -334,10 +349,32 @@ export const apiNodes: APINode[] = [
       token_address: { type: 'array' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_name: { type: 'string', description: 'Token name' },
+          token_symbol: { type: 'string', description: 'Token symbol' },
+          current_price: { type: 'number', description: 'Current token price' },
+          market_cap: { type: 'number', description: 'Market capitalization' },
+          total_supply: { type: 'number', description: 'Total token supply' },
+          circulating_supply: { type: 'number', description: 'Circulating token supply' },
+          holders: { type: 'integer', description: 'Number of token holders' },
+          token_score: { type: 'number', description: 'Overall token score' },
+          trading_pattern_score: { type: 'number', description: 'Trading pattern score' },
+          token_holders_score: { type: 'number', description: 'Token holders score' },
+          volume_score: { type: 'number', description: 'Volume score' }
+        }
+      }
     }
   },
+  
+  // 11. Token - Holders
   {
-    // 11. Token - Holders
     type: 'apiNode',
     label: 'Token Holders',
     endpoint: '/api/v2/token/holders',
@@ -349,6 +386,21 @@ export const apiNodes: APINode[] = [
       token_address: { type: 'array', required: true },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          address: { type: 'string', description: 'Holder wallet address' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          decimal: { type: 'integer', description: 'Token decimal places' },
+          quantity: { type: 'number', description: 'Token quantity held' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_name: { type: 'string', description: 'Token name' },
+          token_symbol: { type: 'string', description: 'Token symbol' }
+        }
+      }
     }
   },
   
@@ -366,6 +418,20 @@ export const apiNodes: APINode[] = [
       time_range: { type: 'string', default: 'all' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          receiver: { type: 'string', description: 'Receiver wallet address' },
+          sender: { type: 'string', description: 'Sender wallet address' },
+          timestamp: { type: 'string', description: 'Transaction timestamp' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          transaction_hash: { type: 'string', description: 'Transaction hash' },
+          value_native: { type: 'number', description: 'Transfer value in native currency' },
+          value_usd: { type: 'number', description: 'Transfer value in USD' }
+        }
+      }
     }
   },
   
@@ -380,6 +446,22 @@ export const apiNodes: APINode[] = [
     params: {
       token_address: { type: 'array', required: true },
       offset: { type: 'integer', default: 0 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          block_date: { type: 'string', description: 'Prediction date and time' },
+          data_type: { type: 'string', description: 'Type of data (Predictions)' },
+          open: { type: 'number', description: 'Opening price' },
+          prediction: { type: 'number', description: 'Predicted price value' },
+          prediction_lb: { type: 'number', description: 'Lower bound of prediction' },
+          prediction_ub: { type: 'number', description: 'Upper bound of prediction' },
+          token: { type: 'string', description: 'Token name' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_symbol: { type: 'string', description: 'Price currency symbol' }
+        }
+      }
     }
   },
   
@@ -396,9 +478,31 @@ export const apiNodes: APINode[] = [
       brand: { type: 'array', required: true },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          brand: { type: 'string', description: 'Brand name' },
+          category: { type: 'string', description: 'Brand category' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          contract_address: { type: 'string', description: 'Contract address' },
+          contract_type: { type: 'string', description: 'Contract type (ERC721/ERC1155)' },
+          contracts: { type: 'array', description: 'List of contract addresses' },
+          description: { type: 'string', description: 'Brand description' },
+          discord_url: { type: 'string', description: 'Discord community URL' },
+          instagram_url: { type: 'string', description: 'Instagram profile URL' },
+          medium_url: { type: 'string', description: 'Medium blog URL' },
+          telegram_url: { type: 'string', description: 'Telegram channel URL' },
+          thumbnail_palette: { type: 'string', description: 'Thumbnail color palette' },
+          thumbnail_url: { type: 'string', description: 'Thumbnail image URL' },
+          twitter_url: { type: 'string', description: 'Twitter profile URL' }
+        }
+      }
     }
   },
-  
+
   // 15. NFT Brand - Metrics
   {
     type: 'apiNode',
@@ -406,18 +510,46 @@ export const apiNodes: APINode[] = [
     endpoint: '/api/x2/nft/brand/metrics',
     method: 'GET',
     category: 'NFT Brand',
-    description: 'Performance and trading metrics',
+    description: 'Retrieve detailed metrics for an NFT brand',
     params: {
       blockchain: { type: 'string', default: 'ethereum' },
       brand: { type: 'array', required: true },
       time_range: { type: 'string', default: '24h' },
-      sort_by: { type: 'string', default: 'mint_tokens' },
-      sort_order: { type: 'string', default: 'desc' },
       offset: { type: 'integer', default: 0 },
-      limit: { type: 'integer', default: 30 }
+      limit: { type: 'integer', default: 30 },
+      sort_by: { type: 'string', default: 'mint_tokens' },
+      sort_order: { type: 'string', default: 'desc' }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          No_of_contracts: { type: 'string', description: 'Number of contracts' },
+          assets_all: { type: 'string', description: 'Total number of assets' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          brand: { type: 'string', description: 'Brand name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          collection: { type: 'string', description: 'Collection name' },
+          contracts: { type: 'string', description: 'Contract addresses' },
+          growth_rate: { type: 'number', description: 'Growth rate' },
+          holders: { type: 'string', description: 'Number of holders' },
+          interactions: { type: 'string', description: 'Number of interactions' },
+          marketplace_volume: { type: 'array', description: 'Volume by marketplace' },
+          mcap: { type: 'number', description: 'Market capitalization' },
+          mint_revenue: { type: 'number', description: 'Revenue from minting' },
+          mint_tokens: { type: 'string', description: 'Number of minted tokens' },
+          primary_sale_revenue: { type: 'number', description: 'Primary sale revenue' },
+          retained_traders: { type: 'string', description: 'Number of retained traders' },
+          royalty_revenue: { type: 'number', description: 'Revenue from royalties' },
+          secondary_sale_revenue: { type: 'number', description: 'Secondary sale revenue' },
+          total_revenue: { type: 'number', description: 'Total revenue' },
+          total_volume: { type: 'number', description: 'Total trading volume' },
+          traders: { type: 'string', description: 'Number of traders' }
+        }
+      }
     }
   },
-  
+
   // 16. NFT Brand - Profile
   {
     type: 'apiNode',
@@ -425,15 +557,32 @@ export const apiNodes: APINode[] = [
     endpoint: '/api/v2/nft/brand/profile',
     method: 'GET',
     category: 'NFT Brand',
-    description: 'Trading insights and token scores',
+    description: 'Retrieve profile information and trading insights',
     params: {
       blockchain: { type: 'string', default: 'ethereum' },
       brand: { type: 'array', required: true },
       time_range: { type: 'string', default: '24h' },
-      sort_by: { type: 'string', default: 'diamond_hands' },
-      sort_order: { type: 'string', default: 'desc' },
       offset: { type: 'integer', default: 0 },
-      limit: { type: 'integer', default: 30 }
+      limit: { type: 'integer', default: 30 },
+      sort_by: { type: 'string', default: 'diamond_hands' },
+      sort_order: { type: 'string', default: 'desc' }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          brand: { type: 'string', description: 'Brand name' },
+          category: { type: 'string', description: 'Brand category' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          diamond_hands: { type: 'string', description: 'Number of diamond hands' },
+          loss_making_trades: { type: 'string', description: 'Number of loss-making trades' },
+          loss_making_volume: { type: 'number', description: 'Volume of loss-making trades' },
+          profitable_trades: { type: 'string', description: 'Number of profitable trades' },
+          profitable_volume: { type: 'number', description: 'Volume of profitable trades' },
+          token_score: { type: 'number', description: 'Token score' }
+        }
+      }
     }
   },
   
@@ -506,8 +655,9 @@ export const apiNodes: APINode[] = [
       limit: { type: 'integer', default: 30 }
     }
   },
+    
+  // 21. NFT Price - Token Estimate
   {
-    // 21. NFT Price - Token Estimate
     type: 'apiNode',
     label: 'NFT Token Price Estimate',
     endpoint: '/api/x2/nft/liquify/price_estimate',
@@ -1168,6 +1318,20 @@ export const apiNodes: APINode[] = [
       time_range: { type: 'string', default: 'all' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          receiver: { type: 'string', description: 'Receiver wallet address' },
+          sender: { type: 'string', description: 'Sender wallet address' },
+          timestamp: { type: 'string', description: 'Transaction timestamp' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          transaction_hash: { type: 'string', description: 'Transaction hash' },
+          value_native: { type: 'number', description: 'Transfer value in native currency' },
+          value_usd: { type: 'number', description: 'Transfer value in USD' }
+        }
+      }
     }
   },
   
