@@ -79,6 +79,21 @@ export const apiNodes: APINode[] = [
       time_range: { type: 'string', default: 'all' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          address: { type: 'string', description: 'Wallet address' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'integer', description: 'Chain identifier' },
+          decimal: { type: 'integer', description: 'Token decimal places' },
+          quantity: { type: 'number', description: 'Token quantity' },
+          token_address: { type: 'string', description: 'Token contract address' },
+          token_name: { type: 'string', description: 'Token name' },
+          token_symbol: { type: 'string', description: 'Token symbol' }
+        }
+      }
     }
   },
 
@@ -95,6 +110,42 @@ export const apiNodes: APINode[] = [
       blockchain: { type: 'array', description: 'Blockchain filter' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          address: { type: 'string', description: 'Wallet address' },
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'string', description: 'Chain identifier' },
+          arbitrage: { type: 'boolean', description: 'Arbitrage activity flag' },
+          at_risk: { type: 'boolean', description: 'Risk status flag' },
+          bot: { type: 'boolean', description: 'Bot activity flag' },
+          bridge: { type: 'boolean', description: 'Bridge usage flag' },
+          bridge_name: { type: 'string', description: 'Name of the bridge if applicable' },
+          contract: { type: 'boolean', description: 'Contract flag' },
+          custodial: { type: 'boolean', description: 'Custodial wallet flag' },
+          custodial_name: { type: 'string', description: 'Name of custodial service' },
+          defi: { type: 'boolean', description: 'DeFi activity flag' },
+          defi_name: { type: 'string', description: 'Name of DeFi protocol' },
+          defi_trader: { type: 'boolean', description: 'DeFi trading activity flag' },
+          dex: { type: 'boolean', description: 'DEX usage flag' },
+          dex_name: { type: 'string', description: 'Name of DEX' },
+          ens_name: { type: 'string', description: 'ENS name if registered' },
+          entity_name: { type: 'string', description: 'Entity name if known' },
+          exchange: { type: 'boolean', description: 'Exchange activity flag' },
+          exchange_name: { type: 'string', description: 'Name of exchange' },
+          marketplace: { type: 'boolean', description: 'Marketplace activity flag' },
+          marketplace_name: { type: 'string', description: 'Name of marketplace' },
+          nft_creator: { type: 'boolean', description: 'NFT creator flag' },
+          nft_holder: { type: 'boolean', description: 'NFT holder flag' },
+          nft_shark: { type: 'boolean', description: 'NFT shark trader flag' },
+          nft_trader: { type: 'boolean', description: 'NFT trading activity flag' },
+          nft_whale: { type: 'boolean', description: 'NFT whale status flag' },
+          risk_category: { type: 'integer', description: 'Risk category level' },
+          risk_depth: { type: 'integer', description: 'Risk depth level' }
+        }
+      }
     }
   },
 
@@ -111,6 +162,28 @@ export const apiNodes: APINode[] = [
       pair_address: { type: 'array', description: 'Pool addresses' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'string', description: 'Chain identifier' },
+          deployed_date: { type: 'string', description: 'Pool deployment date' },
+          deployer: { type: 'string', description: 'Pool deployer address' },
+          pair_address: { type: 'string', description: 'Pool contract address' },
+          pool: { type: 'string', description: 'Pool version' },
+          protocol: { type: 'string', description: 'Protocol name' },
+          token0: { type: 'string', description: 'First token address' },
+          token0_decimal: { type: 'integer', description: 'First token decimals' },
+          token0_name: { type: 'string', description: 'First token name' },
+          token0_symbol: { type: 'string', description: 'First token symbol' },
+          token1: { type: 'string', description: 'Second token address' },
+          token1_decimal: { type: 'integer', description: 'Second token decimals' },
+          token1_name: { type: 'string', description: 'Second token name' },
+          token1_symbol: { type: 'string', description: 'Second token symbol' }
+        }
+      }
     }
   },
 
@@ -127,6 +200,45 @@ export const apiNodes: APINode[] = [
       pair_address: { type: 'array' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          pair_address: { type: 'string', description: 'Pool contract address' },
+          protocol: { type: 'string', description: 'Protocol name' },
+          token0: { type: 'string', description: 'First token address' },
+          token0_price: { type: 'number', description: 'First token price' },
+          token0_reserve: { type: 'number', description: 'First token reserve' },
+          token0_share: { type: 'number', description: 'First token share percentage' },
+          token0_tvl: { type: 'number', description: 'First token TVL' },
+          token1: { type: 'string', description: 'Second token address' },
+          token1_price: { type: 'number', description: 'Second token price' },
+          token1_reserve: { type: 'number', description: 'Second token reserve' },
+          token1_share: { type: 'number', description: 'Second token share percentage' },
+          token1_tvl: { type: 'number', description: 'Second token TVL' },
+          total_tvl: { type: 'number', description: 'Total value locked' },
+          transactions_24hrs: { type: 'number', description: '24h transaction count' },
+          transactions_24hrs_change: { type: 'number', description: '24h transaction change' },
+          transactions_7d: { type: 'number', description: '7d transaction count' },
+          transactions_7d_change: { type: 'number', description: '7d transaction change' },
+          transactions_30d: { type: 'number', description: '30d transaction count' },
+          transactions_30d_change: { type: 'number', description: '30d transaction change' },
+          transactions_90d: { type: 'number', description: '90d transaction count' },
+          transactions_90d_change: { type: 'number', description: '90d transaction change' },
+          transactions_all: { type: 'number', description: 'All-time transaction count' },
+          volume_24hrs: { type: 'number', description: '24h trading volume' },
+          volume_24hrs_change: { type: 'number', description: '24h volume change' },
+          volume_7d: { type: 'number', description: '7d trading volume' },
+          volume_7d_change: { type: 'number', description: '7d volume change' },
+          volume_30d: { type: 'number', description: '30d trading volume' },
+          volume_30d_change: { type: 'number', description: '30d volume change' },
+          volume_90d: { type: 'number', description: '90d trading volume' },
+          volume_90d_change: { type: 'number', description: '90d volume change' },
+          volume_all: { type: 'number', description: 'All-time trading volume' }
+        }
+      }
     }
   },
 
@@ -139,10 +251,32 @@ export const apiNodes: APINode[] = [
     category: 'DeFi',
     description: 'Get protocol metadata',
     params: {
-      blockchain: { type: 'array' },
+      blockchain: { type: 'array', description: 'Blockchain filter' },
       protocol: { type: 'array', description: 'Protocol IDs' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          chain_id: { type: 'string', description: 'Chain identifier' },
+          deployed_date: { type: 'string', description: 'Pool deployment date' },
+          deployer: { type: 'string', description: 'Pool deployer address' },
+          pair_address: { type: 'string', description: 'Pool contract address' },
+          pool: { type: 'string', description: 'Pool version' },
+          protocol: { type: 'string', description: 'Protocol name' },
+          token0: { type: 'string', description: 'First token address' },
+          token0_decimal: { type: 'integer', description: 'First token decimals' },
+          token0_name: { type: 'string', description: 'First token name' },
+          token0_symbol: { type: 'string', description: 'First token symbol' },
+          token1: { type: 'string', description: 'Second token address' },
+          token1_decimal: { type: 'integer', description: 'Second token decimals' },
+          token1_name: { type: 'string', description: 'Second token name' },
+          token1_symbol: { type: 'string', description: 'Second token symbol' }
+        }
+      }
     }
   },
 
@@ -155,9 +289,18 @@ export const apiNodes: APINode[] = [
     category: 'DeFi',
     description: 'Get supported DeFi protocols',
     params: {
-      blockchain: { type: 'array' },
+      blockchain: { type: 'array', description: 'Blockchain filter' },
       offset: { type: 'integer', default: 0 },
       limit: { type: 'integer', default: 30 }
+    },
+    output_params: {
+      data: {
+        type: 'array',
+        items: {
+          blockchain: { type: 'string', description: 'Blockchain name' },
+          protocol: { type: 'string', description: 'Protocol name' }
+        }
+      }
     }
   },
 
